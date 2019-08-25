@@ -1,23 +1,26 @@
 /*
- * Copyright (C) 2004 emuWorks
+ * ffse
+ * Copyright (C) 2004-2005 emuWorks
  * http://games.technoplaza.net/
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of ffse.
  *
- * This program is distributed in the hope that it will be useful,
+ * ffse is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * ffse is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * along with ffse; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: MainFrame.cc,v 1.12 2004/12/08 06:39:53 technoplaza Exp $
+// $Id: MainFrame.cc,v 1.13 2005/08/04 03:07:59 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -548,7 +551,7 @@ void MainFrame::load(wxString &filename) {
     }
 }
 
-void MainFrame::fileOpen(wxCommandEvent &event) {
+void MainFrame::fileOpen(wxCommandEvent &) {
     static wxFileDialog *dlg = new wxFileDialog(this, 
         wxT("Choose a .SAV File"), "", "", 
         wxT("NES SRAM File (*.sav)|*.sav"), (wxOPEN | wxCHANGE_DIR));
@@ -592,7 +595,7 @@ bool MainFrame::close() {
     return true;
 }
 
-void MainFrame::fileClose(wxCommandEvent &event) {
+void MainFrame::fileClose(wxCommandEvent &) {
     close();
 }
 
@@ -691,11 +694,11 @@ bool MainFrame::save(wxString &filename) {
     return true;
 }
 
-void MainFrame::fileSave(wxCommandEvent &event) {
+void MainFrame::fileSave(wxCommandEvent &) {
     save(sramFile);
 }
 
-void MainFrame::fileSaveAs(wxCommandEvent &event) {
+void MainFrame::fileSaveAs(wxCommandEvent &) {
     static wxFileDialog *dlg = new wxFileDialog(this,
         wxT("Choose a .SAV File"), "", "",
         wxT("NES SRAM File (*.sav)|*.sav"), (wxSAVE | wxCHANGE_DIR));
@@ -708,7 +711,7 @@ void MainFrame::fileSaveAs(wxCommandEvent &event) {
     }
 }
 
-void MainFrame::fileExit(wxCommandEvent &event) {
+void MainFrame::fileExit(wxCommandEvent &) {
     if (close()) {
         Close(true);
     }
@@ -743,7 +746,7 @@ void MainFrame::memberChange(wxCommandEvent &event) {
     setOpen(true);
 }
 
-void MainFrame::helpAbout(wxCommandEvent &event) {
+void MainFrame::helpAbout(wxCommandEvent &) {
     wxString msg = wxString(*ffseApp::APP_NAME + wxT(' ') + 
                             *ffseApp::APP_VERSION + wxT('\n') +
                             *ffseApp::APP_COPYRIGHT);
@@ -752,7 +755,7 @@ void MainFrame::helpAbout(wxCommandEvent &event) {
     wxMessageBox(msg, title, wxOK | wxICON_INFORMATION, this);
 }
 
-void MainFrame::goldChange(wxCommandEvent &event) {
+void MainFrame::goldChange(wxCommandEvent &) {
     if (!isOpen()) {
         return;
     }
@@ -836,7 +839,7 @@ void MainFrame::itemHaveChange(wxCommandEvent &event) {
     game->setItem(item, ctrl->IsChecked());
 }
 
-void MainFrame::nameChange(wxCommandEvent &event) {
+void MainFrame::nameChange(wxCommandEvent &) {
     if (!isOpen()) {
         return;
     }

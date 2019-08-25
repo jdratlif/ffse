@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
-| Final Fantasy SRAM Editor 0.90
-| Copyright (C) 2004 emuWorks
+| Final Fantasy SRAM Editor 1.0
+| Copyright (C) 2004-2005 emuWorks
 | Written by John Ratliff
 | http://games.technoplaza.net/
 --------------------------------------------------------------------------------
@@ -23,17 +23,14 @@
 - Installation -
 ----------------
 
-  For Windows and Linux, I have provided a binary version. You should be able to
-  download the binary and run the program by double-clicking the executable.
+  For Windows, Linux, and Mac OS-X I have provided a binary version. You should
+  be able to download the binary and run the program by double-clicking the
+  executable.
   
   For Windows, all the necessary files are included in the binary archive. For
-  Linux, you will need GTK+ 2.0 or later. I use GTK+ 2.0.49 currently. It should
-  build against GTK+ 1.2, but I have not tested this.
+  Linux, you will need GTK+. There are binaries for GTK+ 1.2 and GTK+ 2.0.
   
-  For all other platforms, you will need to compile the source code yourself. It
-  shouldn't be too difficult (except on Mac -- but I can't do anything about
-  that). It should compile under Mac OS-X, Solaris, and Linux distribution, and
-  any Unix that supports the Gimp Toolkit (GTK+).
+  For all other platforms, you will need to compile the source code yourself.
   
   To compile the source, you will require an ISO standard C++ compiler. I
   recommend g++ 3.3 or later. I used g++ 3.4.2 with mingw for Windows. You will
@@ -75,11 +72,6 @@
   take some time before it is added to portage. Still, if you use gentoo, you
   might try 'emerge ffse' and see what happens.
   
-  I don't have any access to Macs, so I cannot compile an OS-X binary. If
-  you have access to a Mac with OS-X, I can try and help you compile the program
-  and see if we can get it to work. Compiling wxWidgets applications and the
-  library itself under Max OS-X is currently a nightmare, but it can be done.
-  
 ---------
 - Usage -
 ---------
@@ -99,7 +91,7 @@
   
   There are three tabs, "General", "Character", and "Magic". They will allow
   you to edit almost any part of the game. Items you have, your characters
-  stats, magic you know, etc.
+  stats, magic you have learned, etc.
   
   Some things I have yet to implement (because I don't know where they are
   stored in the SRAM) include the location of the ship and the airship, and
@@ -141,6 +133,9 @@
 - Revision History -
 --------------------
 
+  Version 1.0 - Wednesday, Aug 3, 2005
+    - Minor code updates
+    - Added Linux GTK+ 1.2 and Mac OS-X binaries
   Version 0.90 - Wednesday, Dec 8, 2004
     - Initial Public Beta
 

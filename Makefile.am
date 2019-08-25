@@ -1,3 +1,3 @@
-EXTRA_DIST = Doxyfile apidocs docs/ffse.txt docs/todo.txt
+EXTRA_DIST = Doxyfile Info.plist apidocs docs/*.txt
 SUBDIRS = source
 
