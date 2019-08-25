@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: ffse.cc,v 1.3 2005/08/04 03:07:59 technoplaza Exp $
+// $Id: ffse.cc,v 1.5 2007/02/18 16:26:01 technoplaza Exp $
  
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -32,20 +32,22 @@
    #include <wx/wx.h>
 #endif
 
-#include <iostream>
-#include <sys/stat.h>
+#include <wx/xrc/xmlres.h>
 
 #include "ffse.hh"
 #include "view/MainFrame.hh"
 
 using namespace ffse;
 
+// prototype for InitXmlResource function
+void InitXmlResource();
+
 // static variable initialization
 const wxString *ffseApp::APP_NAME =
-    new wxString(wxT(PACKAGE_NAME));
+    new wxString(wxT("ffse"));
 
 const wxString *ffseApp::APP_VERSION =
-    new wxString(wxT(PACKAGE_VERSION));
+    new wxString(wxT("1.1"));
 
 const wxString *ffseApp::APP_COPYRIGHT =
     new wxString(wxT("Copyright (C) 2004-2005 emuWorks"));
@@ -53,28 +55,10 @@ const wxString *ffseApp::APP_COPYRIGHT =
 const wxString *ffseApp::APP_URL =
     new wxString(wxT("http://games.technoplaza.net/"));
 
-IMPLEMENT_APP(ffseApp)
-IMPLEMENT_CLASS(ffseApp, wxApp)
-
 bool ffseApp::OnInit() {
-    wxString *xrcfile;
-    
-    if (argc == 2) {
-        xrcfile = new wxString(argv[1]);
-    } else {
-        xrcfile = new wxString(XRC_FILE);
-    }
-    
-    struct stat xrcstats;
-    
-    if (stat(xrcfile->mb_str(), &xrcstats) != 0) {
-        std::cerr << "error: unable to locate XRC file " << 
-            xrcfile->mb_str() << std::endl;
-        return false;
-    }
-    
+    // initialize the XRC resources
     wxXmlResource::Get()->InitAllHandlers();
-    wxXmlResource::Get()->Load(*xrcfile);
+    InitXmlResource();
     
     MainFrame *frame = new MainFrame;
     frame->SetTitle(*APP_NAME + wxT(' ') + *APP_VERSION);
@@ -83,4 +67,7 @@ bool ffseApp::OnInit() {
     
     return true;
 }
+
+IMPLEMENT_APP(ffseApp)
+IMPLEMENT_CLASS(ffseApp, wxApp)
 

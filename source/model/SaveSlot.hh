@@ -20,12 +20,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: SaveSlot.hh,v 1.8 2005/08/04 03:07:59 technoplaza Exp $
+// $Id: SaveSlot.hh,v 1.9 2007/02/18 22:02:58 technoplaza Exp $
 
 #ifndef _SAVE_SLOT_HH
 #define _SAVE_SLOT_HH
-
-#include "../view/MainFrame.hh"
 
 /// The size of the save game in SRAM
 #define GAME_SIZE 0x400
@@ -110,12 +108,12 @@ namespace ffse {
         WATERORB, WINDORB, EARTHORB, TENT, CABIN, HOUSE, HEALP, PUREP, SOFTP
     };
     
-    class MainFrame;
-    
     /**
      * Class to encapsulate SRAM data and provide I/O within its framework.
      */
     class SaveSlot {
+        friend class MainFrame;
+        
     public:
         /**
          * Constructor for a SaveSlot.
@@ -500,8 +498,6 @@ namespace ffse {
          * @param value The new value.
          */
         void setMagic(int member, int level, int slot, unsigned char value);
-        
-        friend class MainFrame;
         
     private:
         /**

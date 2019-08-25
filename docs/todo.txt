@@ -1,0 +1,8 @@
+ffse TODO list
+
+- add statusbar interaction
+- airship / ship / location edit would be nice
+- add swap character support
+- SRAM document
+- add some max controls
+

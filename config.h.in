@@ -20,6 +20,3 @@
 
 /* Version number of package */
 #undef VERSION
-
-/* XRC path */
-#undef XRC_FILE

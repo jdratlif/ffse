@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: FileDropTarget.cc,v 1.2 2005/08/04 03:07:59 technoplaza Exp $
+// $Id: FileDropTarget.cc,v 1.4 2007/02/18 22:02:58 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -32,7 +32,8 @@
     #include <wx/wx.h>
 #endif
 
-#include "FileDropTarget.hh"
+#include "view/MainFrame.hh"
+#include "view/FileDropTarget.hh"
 
 using namespace ffse;
 

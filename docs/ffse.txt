@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
-| Final Fantasy SRAM Editor 1.0
-| Copyright (C) 2004-2005 emuWorks
+| Final Fantasy SRAM Editor 1.1
+| Copyright (C) 2004-2005,2007 emuWorks
 | Written by John Ratliff
 | http://games.technoplaza.net/
 --------------------------------------------------------------------------------
@@ -23,21 +23,19 @@
 - Installation -
 ----------------
 
-  For Windows, Linux, and Mac OS-X I have provided a binary version. You should
+  For Windows, Linux, and Mac OS X I have provided a binary version. You should
   be able to download the binary and run the program by double-clicking the
   executable.
   
   For Windows, all the necessary files are included in the binary archive. For
-  Linux, you will need GTK+. There are binaries for GTK+ 1.2 and GTK+ 2.0.
+  Linux, you will need GTK+ 2.0.
   
   For all other platforms, you will need to compile the source code yourself.
   
   To compile the source, you will require an ISO standard C++ compiler. I
   recommend g++ 3.3 or later. I used g++ 3.4.2 with mingw for Windows. You will
-  also need the wxWidgets library to compile from source. Though it can be
-  compiled under wxWidgets 2.4.2, you are STRONGLY URGED to use wxWidgets 2.5.3
-  as this is the version we test with. The wxWidgets library is free software
-  under the GNU GPL and can be found at http://www.wxwidgets.org/.
+  also need the wxWidgets library to compile from source. You will need
+  wxWidgets 2.6 to compile from source.
   
   Once you have wxWidgets installed, you should be able to do something like:
   
@@ -45,32 +43,8 @@
   
   This should produce an executable ffse (ffse.exe on Windows).
   
-  You can use make install to install the program, but it's not a good
-  solution yet as I can't seem to figure out how to install the XRC file where
-  I want. So currently, the XRC file doesn't get installed. There are a few
-  options:
-  
-  a) specify the path to the XRC file manually at runtime
-     ffse /path/to/xrc/hack4u.xrc
-     
-  b) set a default path and put the XRC file there
-     ./configure XRC_PREFIX=/usr/share/hack4u
-     make && make install
-     mkdir /usr/share/hack4u && cp source/xrc/hack4u.xrc /usr/share/hack4u
-     
-  c) accept the default XRC prefix (./xrc) and put the XRC file there
-     mkdir /path/to/binary/xrc && cp source/xrc/hack4u.xrc /path/to/binary/xrc
-  
-  The binary package uses option C cause that's just easiest if you don't care
-  about putting binaries and share files in separate locations. If you do, then
-  I'd pick B.
-  
   If you use the binary package, you don't need to worry as long as you leave
   the folder intact.
-  
-  I am working on a gentoo ebuild, but they get added very slowly, so it may
-  take some time before it is added to portage. Still, if you use gentoo, you
-  might try 'emerge ffse' and see what happens.
   
 ---------
 - Usage -
@@ -133,9 +107,14 @@
 - Revision History -
 --------------------
 
+  Version 1.1 - Sunday, February 18, 2007
+    - Minor code cleanup
+    - Added Visual C++ 2005 project files
+    
   Version 1.0 - Wednesday, Aug 3, 2005
     - Minor code updates
-    - Added Linux GTK+ 1.2 and Mac OS-X binaries
+    - Added Linux GTK+ 1.2 and Mac OS X binaries
+    
   Version 0.90 - Wednesday, Dec 8, 2004
     - Initial Public Beta
 

@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: SaveSlot.cc,v 1.9 2005/08/04 03:07:59 technoplaza Exp $
+// $Id: SaveSlot.cc,v 1.10 2007/02/18 16:26:01 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -34,7 +34,7 @@
 
 #include <cstring>
 
-#include "SaveSlot.hh"
+#include "model/SaveSlot.hh"
 
 using namespace ffse;
 

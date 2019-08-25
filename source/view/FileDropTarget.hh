@@ -20,14 +20,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: FileDropTarget.hh,v 1.2 2005/08/04 03:07:59 technoplaza Exp $
+// $Id: FileDropTarget.hh,v 1.3 2007/02/18 22:02:58 technoplaza Exp $
 
 #ifndef _FILE_DROP_TARGET_HH
 #define _FILE_DROP_TARGET_HH
 
 #include <wx/dnd.h>
-
-#include "MainFrame.hh"
 
 namespace ffse {
     class MainFrame;
