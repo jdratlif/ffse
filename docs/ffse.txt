@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
-| Final Fantasy SRAM Editor 1.2
-| Copyright (C) 2004-2005,2007 emuWorks
+| Final Fantasy SRAM Editor 1.2a
+| Copyright (C) 2004-2005,2007-2008 emuWorks
 | Written by John Ratliff
 | http://games.technoplaza.net/
 --------------------------------------------------------------------------------
@@ -27,24 +27,16 @@
   be able to download the binary and run the program by double-clicking the
   executable.
   
-  For Windows, all the necessary files are included in the binary archive. For
-  Linux, you will need GTK+ 2.0.
+  The source code is available if you wish to compile it yourself or are using
+  a different platform. You will need a modern C++ compiler and wxWidgets 2.8 or
+  later.
   
-  For all other platforms, you will need to compile the source code yourself.
+  On most platforms, you can compile simply by running './configure && make'.
+  This should work for Linux, Mac OS X, and Windows with mingw/msys. There are
+  also Visual Studio project files in the vstudio directory.
   
-  To compile the source, you will require an ISO standard C++ compiler. I
-  recommend g++ 3.3 or later. I used g++ 3.4.2 with mingw for Windows. You will
-  also need the wxWidgets library to compile from source. You will need
-  wxWidgets 2.6 to compile from source.
-  
-  Once you have wxWidgets installed, you should be able to do something like:
-  
-  ./configure && make
-  
-  This should produce an executable ffse (ffse.exe on Windows).
-  
-  If you use the binary package, you don't need to worry as long as you leave
-  the folder intact.
+  For more complete compiling instructions, consult our compiling howto at
+  http://games.technoplaza.net/compile.php.
   
 ---------
 - Usage -
@@ -107,6 +99,13 @@
 - Revision History -
 --------------------
 
+  Version 1.2a - Tuesday, December 16, 2008
+    - Updated code to compile under wxWidgets 2.8.
+    - Updated Visual Studio project files for Visual Studio 2008.
+    - Added upx compression to mac version.
+    - Added icons for the mac version.
+    - Updated compilation instructions.
+
   Version 1.2 - Sunday, February 25, 2007
     - Minor code cleanup
     - Adjusted frame sizers
@@ -115,11 +114,11 @@
     - Minor code cleanup
     - Added Visual C++ 2005 project files
     
-  Version 1.0 - Wednesday, Aug 3, 2005
+  Version 1.0 - Wednesday, August 3, 2005
     - Minor code updates
     - Added Linux GTK+ 1.2 and Mac OS X binaries
     
-  Version 0.90 - Wednesday, Dec 8, 2004
+  Version 0.90 - Wednesday, December 8, 2004
     - Initial Public Beta
 
 -----------

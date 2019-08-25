@@ -1,4 +1,6 @@
-AC_INIT([ffse], [1.2], [webmaster@technoplaza.net])
+dnl $Id: configure.ac,v 1.6 2008/12/17 00:36:23 jdratlif Exp $
+
+AC_INIT([ffse], [1.2a], [webmaster@technoplaza.net])
 AC_PREREQ([2.59])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.9.6 dist-bzip2])
@@ -13,16 +15,15 @@ AM_CONDITIONAL([WINDOWS],
 AC_PROG_CXX
 AC_PROG_INSTALL
 AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG([2.6.0], HAVE_WXWIDGETS=1, HAVE_WXWIDGETS=0)
+AM_PATH_WXCONFIG([2.8.0], HAVE_WXWIDGETS=1, HAVE_WXWIDGETS=0)
 
 if test $HAVE_WXWIDGETS -eq 1; then
     CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
     CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
     LIBS="$LIBS $WX_LIBS"
 else
-    AC_MSG_ERROR([wxWidgets 2.6 is required.
-                  
-                  Please install wxWidgets 2.6 from http://www.wxwidgets.org.
+    AC_MSG_ERROR([wxWidgets 2.8 is required.
+                  Please install wxWidgets from http://www.wxwidgets.org.
                   
                   This error could also be the result of a non-standard install
                   path or a missing wx-config program.])

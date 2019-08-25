@@ -1,6 +1,6 @@
 /*
  * ffse
- * Copyright (C) 2004-2005 emuWorks
+ * Copyright (C) 2004-2005,2007-2008 emuWorks
  * http://games.technoplaza.net/
  *
  * This file is part of ffse.
@@ -20,10 +20,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: MainFrame.hh,v 1.17 2007/02/18 22:02:58 technoplaza Exp $
+// $Id: MainFrame.hh,v 1.18 2008/12/16 10:26:31 jdratlif Exp $
 
-#ifndef _MAIN_FRAME_HH
-#define _MAIN_FRAME_HH
+#ifndef FFSE_MAIN_FRAME_HH_
+#define FFSE_MAIN_FRAME_HH_
 
 namespace ffse {
     class SaveSlot;

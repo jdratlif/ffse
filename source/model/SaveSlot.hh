@@ -1,6 +1,6 @@
 /*
  * ffse
- * Copyright (C) 2004-2005 emuWorks
+ * Copyright (C) 2004-2005,2007-2008 emuWorks
  * http://games.technoplaza.net/
  *
  * This file is part of ffse.
@@ -20,10 +20,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: SaveSlot.hh,v 1.9 2007/02/18 22:02:58 technoplaza Exp $
+// $Id: SaveSlot.hh,v 1.10 2008/12/16 10:26:31 jdratlif Exp $
 
-#ifndef _SAVE_SLOT_HH
-#define _SAVE_SLOT_HH
+#ifndef FFSE_SAVE_SLOT_HH_
+#define FFSE_SAVE_SLOT_HH_
 
 /// The size of the save game in SRAM
 #define GAME_SIZE 0x400

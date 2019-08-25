@@ -1,6 +1,6 @@
 /*
  * ffse
- * Copyright (C) 2004-2005 emuWorks
+ * Copyright (C) 2004-2005,2007-2008 emuWorks
  * http://games.technoplaza.net/
  *
  * This file is part of ffse.
@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: FileDropTarget.cc,v 1.4 2007/02/18 22:02:58 technoplaza Exp $
+// $Id: FileDropTarget.cc,v 1.5 2008/12/16 10:26:31 jdratlif Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -42,10 +42,6 @@ bool FileDropTarget::OnDropFiles(wxCoord, wxCoord, const wxArrayString &files) {
 
     if (size > 0) {
         wxString filename = files[0];
-
-        #ifdef __WXGTK__
-            filename.Replace("%20", " ");
-        #endif
 
         owner->load(filename);
     }

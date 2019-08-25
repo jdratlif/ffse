@@ -1,6 +1,6 @@
 /*
  * ffse
- * Copyright (C) 2004-2005 emuWorks
+ * Copyright (C) 2004-2005,2007-2008 emuWorks
  * http://games.technoplaza.net/
  *
  * This file is part of ffse.
@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: MainFrame.cc,v 1.18 2007/02/25 11:29:19 technoplaza Exp $
+// $Id: MainFrame.cc,v 1.21 2008/12/16 20:28:06 jdratlif Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -33,6 +33,7 @@
 #endif
 
 #include <wx/xrc/xmlres.h>
+#include <wx/notebook.h>
 
 #include <fstream>
 #include <cstring>
@@ -416,7 +417,7 @@ void MainFrame::load(wxString &filename) {
 void MainFrame::fileOpen(wxCommandEvent &) {
     static wxFileDialog *dlg = new wxFileDialog(this, 
         wxT("Choose a .SAV File"), wxT(""), wxT(""), 
-        wxT("NES SRAM File (*.sav)|*.sav"), (wxOPEN | wxCHANGE_DIR));
+        wxT("NES SRAM File (*.sav)|*.sav"), (wxFD_OPEN | wxFD_CHANGE_DIR));
         
     int value = dlg->ShowModal();
     
@@ -564,7 +565,7 @@ void MainFrame::fileSave(wxCommandEvent &) {
 void MainFrame::fileSaveAs(wxCommandEvent &) {
     static wxFileDialog *dlg = new wxFileDialog(this,
         wxT("Choose a .SAV File"), wxT(""), wxT(""),
-        wxT("NES SRAM File (*.sav)|*.sav"), (wxSAVE | wxCHANGE_DIR));
+        wxT("NES SRAM File (*.sav)|*.sav"), (wxFD_SAVE | wxFD_CHANGE_DIR));
 
     int value = dlg->ShowModal();
 

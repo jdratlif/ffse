@@ -1,6 +1,6 @@
 /*
  * ffse
- * Copyright (C) 2004-2005 emuWorks
+ * Copyright (C) 2004-2005,2007-2008 emuWorks
  * http://games.technoplaza.net/
  *
  * This file is part of ffse.
@@ -20,10 +20,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: ffse.hh,v 1.4 2007/02/25 11:29:19 technoplaza Exp $
+// $Id: ffse.hh,v 1.5 2008/12/16 10:26:31 jdratlif Exp $
 
-#ifndef _FFSE_HH
-#define _FFSE_HH
+#ifndef FFSE_FFSE_HH_
+#define FFSE_FFSE_HH_
 
 /**
  * Private ffse namespace is used for all classs and members of this project.
