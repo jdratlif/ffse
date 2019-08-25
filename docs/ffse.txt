@@ -1,0 +1,172 @@
+--------------------------------------------------------------------------------
+| Final Fantasy SRAM Editor 0.90
+| Copyright (C) 2004 emuWorks
+| Written by John Ratliff
+| http://games.technoplaza.net/
+--------------------------------------------------------------------------------
+
+----------------
+- Introduction -
+----------------
+
+  ffse, the Final Fantasy SRAM Editor is a tool for editing save state files for
+  Final Fantasy on the NES.
+  
+  Instead of taking an emulator dependent save file such as Nesticle states or
+  FCEU states, this program works on the emulator independent SRAM files which
+  are used by the game internally and will therefore work on any emulator.
+  
+  These SRAM files are generally named the same as the ROM with a .sav
+  extention. For example, "Final Fantasy (U) [!].sav" is one possible example.
+  
+----------------
+- Installation -
+----------------
+
+  For Windows and Linux, I have provided a binary version. You should be able to
+  download the binary and run the program by double-clicking the executable.
+  
+  For Windows, all the necessary files are included in the binary archive. For
+  Linux, you will need GTK+ 2.0 or later. I use GTK+ 2.0.49 currently. It should
+  build against GTK+ 1.2, but I have not tested this.
+  
+  For all other platforms, you will need to compile the source code yourself. It
+  shouldn't be too difficult (except on Mac -- but I can't do anything about
+  that). It should compile under Mac OS-X, Solaris, and Linux distribution, and
+  any Unix that supports the Gimp Toolkit (GTK+).
+  
+  To compile the source, you will require an ISO standard C++ compiler. I
+  recommend g++ 3.3 or later. I used g++ 3.4.2 with mingw for Windows. You will
+  also need the wxWidgets library to compile from source. Though it can be
+  compiled under wxWidgets 2.4.2, you are STRONGLY URGED to use wxWidgets 2.5.3
+  as this is the version we test with. The wxWidgets library is free software
+  under the GNU GPL and can be found at http://www.wxwidgets.org/.
+  
+  Once you have wxWidgets installed, you should be able to do something like:
+  
+  ./configure && make
+  
+  This should produce an executable ffse (ffse.exe on Windows).
+  
+  You can use make install to install the program, but it's not a good
+  solution yet as I can't seem to figure out how to install the XRC file where
+  I want. So currently, the XRC file doesn't get installed. There are a few
+  options:
+  
+  a) specify the path to the XRC file manually at runtime
+     ffse /path/to/xrc/hack4u.xrc
+     
+  b) set a default path and put the XRC file there
+     ./configure XRC_PREFIX=/usr/share/hack4u
+     make && make install
+     mkdir /usr/share/hack4u && cp source/xrc/hack4u.xrc /usr/share/hack4u
+     
+  c) accept the default XRC prefix (./xrc) and put the XRC file there
+     mkdir /path/to/binary/xrc && cp source/xrc/hack4u.xrc /path/to/binary/xrc
+  
+  The binary package uses option C cause that's just easiest if you don't care
+  about putting binaries and share files in separate locations. If you do, then
+  I'd pick B.
+  
+  If you use the binary package, you don't need to worry as long as you leave
+  the folder intact.
+  
+  I am working on a gentoo ebuild, but they get added very slowly, so it may
+  take some time before it is added to portage. Still, if you use gentoo, you
+  might try 'emerge ffse' and see what happens.
+  
+  I don't have any access to Macs, so I cannot compile an OS-X binary. If
+  you have access to a Mac with OS-X, I can try and help you compile the program
+  and see if we can get it to work. Compiling wxWidgets applications and the
+  library itself under Max OS-X is currently a nightmare, but it can be done.
+  
+---------
+- Usage -
+---------
+
+  Using the program should (I hope) be fairly straightforward. Start the program
+  ffse either by double-clicking or from the command line.
+  
+  Load the SRAM .sav file. For FCEU on Windows, this is in the FCEU directory
+  in the SAV subdirectory. For FCEU on Unix, this is in the ~/.fceu directory. I
+  don't know about other emulators because I don't use them. The program should
+  work on any emulator that uses the battery backed RAM (SRAM), which nearly
+  all modern ones do.
+  
+  Once the file is open, it will load the game. If the SRAM file is not valid,
+  or doesn't have a save game, the program will inform you and not load
+  anything.
+  
+  There are three tabs, "General", "Character", and "Magic". They will allow
+  you to edit almost any part of the game. Items you have, your characters
+  stats, magic you know, etc.
+  
+  Some things I have yet to implement (because I don't know where they are
+  stored in the SRAM) include the location of the ship and the airship, and
+  whether or not you have them. If there is something you want to be
+  able to edit that you cannot, contact me and I'll see what I can do.
+  
+  When you load a .SAV file, it will make a backup in a file named the same as
+  your SRAM file with a .bak on the end. If something goes wrong when you try
+  to start your edited game, just delete the SRAM file and rename the backup to
+  .sav instead of .sav.bak. Note that if you load the SRAM file, make changes,
+  and load it again, you will lose the original backup. Personally, it wouldn't
+  hurt to make a backup copy of your SRAM file before editing it if your
+  original is important to you. Though I have complete faith in the program,
+  better safe than sorry.
+  
+---------
+- Notes -
+---------
+
+  Some important things to be aware of.
+  
+  - This is BETA software. Your use of it is AT YOUR OWN RISK. I take no
+    responsibility if this program screws up your data, or any other
+    thing on your or any other computer. I'm pretty sure it won't, but don't
+    blame me if it does!
+    
+  - The program checks for valid values in most cases, but I'm not altogether
+    sure all the ranges I put in are correct. Contact me if you feel a valid
+    value is being ignored by the program.
+    
+  - You can create some invalid combinations. Equipping two weapons or armors
+    for example. This seems to have the positive effect of adding both weapons
+    and armors stats to your attack/defense stats, but I have not tested it
+    enough to be sure it isn't harmful to the game. The program will warn you
+    if you have equipped duplicate equipment, but will allow you to save if you
+    say OK.
+    
+--------------------
+- Revision History -
+--------------------
+
+  Version 0.90 - Wednesday, Dec 8, 2004
+    - Initial Public Beta
+
+-----------
+- License -
+-----------
+
+  ffse is free software released under the GNU General Public License. For
+  more information, you can visit http://www.gnu.org/. For the terms of the
+  license, you can visit http://resume.technoplaza.net/license/gnu-gpl.html
+  
+-------------------
+- Acknowledgments -
+-------------------
+
+  PKT_Paladin
+    - His save state hacking guide for Nesticle was invaluable in creating this
+      program. I would have had to do all the research myself otherwise.
+      http://db.gamefaqs.com/console/nes/file/final_fantasy_hacking.txt
+  
+-----------------------
+- Contact Information -
+-----------------------
+
+  The latest version of hack4u can always be found at emuWorks
+  http://games.technoplaza.net/
+  
+  You can contact me at http://www.technoplaza.net/feedback.php
+
