@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: MainFrame.cc,v 1.17 2007/02/18 22:02:58 technoplaza Exp $
+// $Id: MainFrame.cc,v 1.18 2007/02/25 11:29:19 technoplaza Exp $
 
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -48,16 +48,17 @@ using namespace ffse;
 MainFrame::MainFrame() {
     SetParent(NULL);
     CreateControls();
+    GetSizer()->SetSizeHints(this);
     Centre();
+    
+    XRCCTRL(*this, "IDN_FFSE", wxNotebook)->Show(false);
     
     SetDropTarget(new FileDropTarget(this));
 }
 
 void MainFrame::CreateControls() {
-    wxXmlResource::Get()->LoadFrame(this, GetParent(), wxT("ID_FRAME"));
+    wxXmlResource::Get()->LoadFrame(this, GetParent(), wxT("IDF_FRAME"));
     SetIcon(orb32x32_xpm);
-    
-    XRCCTRL(*this, "ID_NOTEBOOK", wxNotebook)->Show(false);
     
     wxMenuBar *menubar = GetMenuBar();
     
@@ -73,21 +74,20 @@ void MainFrame::CreateControls() {
     memberItems[3] = menubar->FindItem(XRCID("IDM_MEMBER_FOUR"));
     memberItems[3]->Enable(false);
     
-    fileCloseItem = menubar->FindItem(XRCID("IDM_FILE_CLOSE"));
-    fileSaveItem = menubar->FindItem(XRCID("IDM_FILE_SAVE"));
-    fileSaveAsItem = menubar->FindItem(XRCID("IDM_FILE_SAVE_AS"));
+    fileCloseItem = menubar->FindItem(wxID_CLOSE);
+    fileSaveItem = menubar->FindItem(wxID_SAVE);
+    fileSaveAsItem = menubar->FindItem(wxID_SAVEAS);
     
     wxTextValidator numberValidator(wxFILTER_NUMERIC);
-    goldText = XRCCTRL(*this, "ID_GENERAL_GOLD", wxTextCtrl);
+    goldText = XRCCTRL(*this, "IDT_GENERAL_GOLD", wxTextCtrl);
     goldText->SetValidator(numberValidator);
-    goldText->SetMaxLength(6);
     
-    healSlider = XRCCTRL(*this, "ID_GENERAL_HEAL", wxSlider);
-    pureSlider = XRCCTRL(*this, "ID_GENERAL_PURE", wxSlider);
-    softSlider = XRCCTRL(*this, "ID_GENERAL_SOFT", wxSlider);
-    tentSlider = XRCCTRL(*this, "ID_GENERAL_TENT", wxSlider);
-    cabinSlider = XRCCTRL(*this, "ID_GENERAL_CABIN", wxSlider);
-    houseSlider = XRCCTRL(*this, "ID_GENERAL_HOUSE", wxSlider);
+    healSlider = XRCCTRL(*this, "IDS_GENERAL_HEAL", wxSlider);
+    pureSlider = XRCCTRL(*this, "IDS_GENERAL_PURE", wxSlider);
+    softSlider = XRCCTRL(*this, "IDS_GENERAL_SOFT", wxSlider);
+    tentSlider = XRCCTRL(*this, "IDS_GENERAL_TENT", wxSlider);
+    cabinSlider = XRCCTRL(*this, "IDS_GENERAL_CABIN", wxSlider);
+    houseSlider = XRCCTRL(*this, "IDS_GENERAL_HOUSE", wxSlider);
     
     wxArrayString letters;
     letters.Add(wxT("A")); letters.Add(wxT("B")); letters.Add(wxT("C"));
@@ -117,120 +117,109 @@ void MainFrame::CreateControls() {
     wxTextValidator nameValidator(wxFILTER_INCLUDE_CHAR_LIST);
     nameValidator.SetIncludes(letters);
     
-    nameText = XRCCTRL(*this, "ID_CHARACTER_NAME", wxTextCtrl);
+    nameText = XRCCTRL(*this, "IDT_CHARACTER_NAME", wxTextCtrl);
     nameText->SetValidator(nameValidator);
-    nameText->SetMaxLength(4);
     
-    classChoice = XRCCTRL(*this, "ID_CHARACTER_CLASS", wxChoice);
-    conditionChoice = XRCCTRL(*this, "ID_CHARACTER_CONDITION", wxChoice);
+    classChoice = XRCCTRL(*this, "IDC_CHARACTER_CLASS", wxChoice);
+    conditionChoice = XRCCTRL(*this, "IDC_CHARACTER_CONDITION", wxChoice);
     
-    currentHPText = XRCCTRL(*this, "ID_CHARACTER_CURRENT_HP", wxTextCtrl);
+    currentHPText = XRCCTRL(*this, "IDT_CHARACTER_CURRENT_HP", wxTextCtrl);
     currentHPText->SetValidator(numberValidator);
-    currentHPText->SetMaxLength(3);
     
-    maxHPText = XRCCTRL(*this, "ID_CHARACTER_MAX_HP", wxTextCtrl);
+    maxHPText = XRCCTRL(*this, "IDT_CHARACTER_MAX_HP", wxTextCtrl);
     maxHPText->SetValidator(numberValidator);
-    maxHPText->SetMaxLength(3);
     
-    experienceText = XRCCTRL(*this, "ID_CHARACTER_EXPERIENCE", wxTextCtrl);
+    experienceText = XRCCTRL(*this, "IDT_CHARACTER_EXPERIENCE", wxTextCtrl);
     experienceText->SetValidator(numberValidator);
-    experienceText->SetMaxLength(6);
     
-    strengthText = XRCCTRL(*this, "ID_CHARACTER_STRENGTH", wxTextCtrl);
+    strengthText = XRCCTRL(*this, "IDT_CHARACTER_STRENGTH", wxTextCtrl);
     strengthText->SetValidator(numberValidator);
-    strengthText->SetMaxLength(2);
     
-    agilityText = XRCCTRL(*this, "ID_CHARACTER_AGILITY", wxTextCtrl);
+    agilityText = XRCCTRL(*this, "IDT_CHARACTER_AGILITY", wxTextCtrl);
     agilityText->SetValidator(numberValidator);
-    agilityText->SetMaxLength(2);
     
-    intelligenceText = XRCCTRL(*this, "ID_CHARACTER_INTELLIGENCE", wxTextCtrl);
+    intelligenceText = XRCCTRL(*this, "IDT_CHARACTER_INTELLIGENCE", wxTextCtrl);
     intelligenceText->SetValidator(numberValidator);
-    intelligenceText->SetMaxLength(2);
     
-    vitalityText = XRCCTRL(*this, "ID_CHARACTER_VITALITY", wxTextCtrl);
+    vitalityText = XRCCTRL(*this, "IDT_CHARACTER_VITALITY", wxTextCtrl);
     vitalityText->SetValidator(numberValidator);
-    vitalityText->SetMaxLength(2);
     
-    luckText = XRCCTRL(*this, "ID_CHARACTER_LUCK", wxTextCtrl);
+    luckText = XRCCTRL(*this, "IDT_CHARACTER_LUCK", wxTextCtrl);
     luckText->SetValidator(numberValidator);
-    luckText->SetMaxLength(2);
     
-    damageText = XRCCTRL(*this, "ID_CHARACTER_DAMAGE", wxTextCtrl);
+    damageText = XRCCTRL(*this, "IDT_CHARACTER_DAMAGE", wxTextCtrl);
     damageText->SetValidator(numberValidator);
-    damageText->SetMaxLength(3);
     
-    hitPercentText = XRCCTRL(*this, "ID_CHARACTER_HIT_PERCENT", wxTextCtrl);
+    hitPercentText = XRCCTRL(*this, "IDT_CHARACTER_HIT_PERCENT", wxTextCtrl);
     hitPercentText->SetValidator(numberValidator);
-    hitPercentText->SetMaxLength(3);
     
-    weaponChoice[0] = XRCCTRL(*this, "ID_CHARACTER_WEAPON1", wxChoice);
+    weaponChoice[0] = XRCCTRL(*this, "IDC_CHARACTER_WEAPON1", wxChoice);
     weaponEquippedCheck[0] =
-        XRCCTRL(*this, "ID_CHARACTER_WEAPON_EQUIPPED1", wxCheckBox);
-    weaponChoice[1] = XRCCTRL(*this, "ID_CHARACTER_WEAPON2", wxChoice);
+        XRCCTRL(*this, "IDC_CHARACTER_WEAPON_EQUIPPED1", wxCheckBox);
+    weaponChoice[1] = XRCCTRL(*this, "IDC_CHARACTER_WEAPON2", wxChoice);
     weaponEquippedCheck[1] =
-        XRCCTRL(*this, "ID_CHARACTER_WEAPON_EQUIPPED2", wxCheckBox);
-    weaponChoice[2] = XRCCTRL(*this, "ID_CHARACTER_WEAPON3", wxChoice);
+        XRCCTRL(*this, "IDC_CHARACTER_WEAPON_EQUIPPED2", wxCheckBox);
+    weaponChoice[2] = XRCCTRL(*this, "IDC_CHARACTER_WEAPON3", wxChoice);
     weaponEquippedCheck[2] =
-        XRCCTRL(*this, "ID_CHARACTER_WEAPON_EQUIPPED3", wxCheckBox);
-    weaponChoice[3] = XRCCTRL(*this, "ID_CHARACTER_WEAPON4", wxChoice);
+        XRCCTRL(*this, "IDC_CHARACTER_WEAPON_EQUIPPED3", wxCheckBox);
+    weaponChoice[3] = XRCCTRL(*this, "IDC_CHARACTER_WEAPON4", wxChoice);
     weaponEquippedCheck[3] =
-        XRCCTRL(*this, "ID_CHARACTER_WEAPON_EQUIPPED4", wxCheckBox);
+        XRCCTRL(*this, "IDC_CHARACTER_WEAPON_EQUIPPED4", wxCheckBox);
     
-    armorChoice[0] = XRCCTRL(*this, "ID_CHARACTER_ARMOR1", wxChoice);
+    armorChoice[0] = XRCCTRL(*this, "IDC_CHARACTER_ARMOR1", wxChoice);
     armorEquippedCheck[0] =
-        XRCCTRL(*this, "ID_CHARACTER_ARMOR_EQUIPPED1", wxCheckBox);
-    armorChoice[1] = XRCCTRL(*this, "ID_CHARACTER_ARMOR2", wxChoice);
+        XRCCTRL(*this, "IDC_CHARACTER_ARMOR_EQUIPPED1", wxCheckBox);
+    armorChoice[1] = XRCCTRL(*this, "IDC_CHARACTER_ARMOR2", wxChoice);
     armorEquippedCheck[1] =
-        XRCCTRL(*this, "ID_CHARACTER_ARMOR_EQUIPPED2", wxCheckBox);
-    armorChoice[2] = XRCCTRL(*this, "ID_CHARACTER_ARMOR3", wxChoice);
+        XRCCTRL(*this, "IDC_CHARACTER_ARMOR_EQUIPPED2", wxCheckBox);
+    armorChoice[2] = XRCCTRL(*this, "IDC_CHARACTER_ARMOR3", wxChoice);
     armorEquippedCheck[2] =
-        XRCCTRL(*this, "ID_CHARACTER_ARMOR_EQUIPPED3", wxCheckBox);
-    armorChoice[3] = XRCCTRL(*this, "ID_CHARACTER_ARMOR4", wxChoice);
+        XRCCTRL(*this, "IDC_CHARACTER_ARMOR_EQUIPPED3", wxCheckBox);
+    armorChoice[3] = XRCCTRL(*this, "IDC_CHARACTER_ARMOR4", wxChoice);
     armorEquippedCheck[3] =
-        XRCCTRL(*this, "ID_CHARACTER_ARMOR_EQUIPPED4", wxCheckBox);
+        XRCCTRL(*this, "IDC_CHARACTER_ARMOR_EQUIPPED4", wxCheckBox);
     
-    currentMagicSlider[0] = XRCCTRL(*this, "ID_MAGIC_CURRENT1", wxSlider);
-    maxMagicSlider[0] = XRCCTRL(*this, "ID_MAGIC_MAX1", wxSlider);
-    currentMagicSlider[1] = XRCCTRL(*this, "ID_MAGIC_CURRENT2", wxSlider);
-    maxMagicSlider[1] = XRCCTRL(*this, "ID_MAGIC_MAX2", wxSlider);
-    currentMagicSlider[2] = XRCCTRL(*this, "ID_MAGIC_CURRENT3", wxSlider);
-    maxMagicSlider[2] = XRCCTRL(*this, "ID_MAGIC_MAX3", wxSlider);
-    currentMagicSlider[3] = XRCCTRL(*this, "ID_MAGIC_CURRENT4", wxSlider);
-    maxMagicSlider[3] = XRCCTRL(*this, "ID_MAGIC_MAX4", wxSlider);
-    currentMagicSlider[4] = XRCCTRL(*this, "ID_MAGIC_CURRENT5", wxSlider);
-    maxMagicSlider[4] = XRCCTRL(*this, "ID_MAGIC_MAX5", wxSlider);
-    currentMagicSlider[5] = XRCCTRL(*this, "ID_MAGIC_CURRENT6", wxSlider);
-    maxMagicSlider[5] = XRCCTRL(*this, "ID_MAGIC_MAX6", wxSlider);
-    currentMagicSlider[6] = XRCCTRL(*this, "ID_MAGIC_CURRENT7", wxSlider);
-    maxMagicSlider[6] = XRCCTRL(*this, "ID_MAGIC_MAX7", wxSlider);
-    currentMagicSlider[7] = XRCCTRL(*this, "ID_MAGIC_CURRENT8", wxSlider);
-    maxMagicSlider[7] = XRCCTRL(*this, "ID_MAGIC_MAX8", wxSlider);
+    currentMagicSlider[0] = XRCCTRL(*this, "IDS_MAGIC_CURRENT1", wxSlider);
+    maxMagicSlider[0] = XRCCTRL(*this, "IDS_MAGIC_MAX1", wxSlider);
+    currentMagicSlider[1] = XRCCTRL(*this, "IDS_MAGIC_CURRENT2", wxSlider);
+    maxMagicSlider[1] = XRCCTRL(*this, "IDS_MAGIC_MAX2", wxSlider);
+    currentMagicSlider[2] = XRCCTRL(*this, "IDS_MAGIC_CURRENT3", wxSlider);
+    maxMagicSlider[2] = XRCCTRL(*this, "IDS_MAGIC_MAX3", wxSlider);
+    currentMagicSlider[3] = XRCCTRL(*this, "IDS_MAGIC_CURRENT4", wxSlider);
+    maxMagicSlider[3] = XRCCTRL(*this, "IDS_MAGIC_MAX4", wxSlider);
+    currentMagicSlider[4] = XRCCTRL(*this, "IDS_MAGIC_CURRENT5", wxSlider);
+    maxMagicSlider[4] = XRCCTRL(*this, "IDS_MAGIC_MAX5", wxSlider);
+    currentMagicSlider[5] = XRCCTRL(*this, "IDS_MAGIC_CURRENT6", wxSlider);
+    maxMagicSlider[5] = XRCCTRL(*this, "IDS_MAGIC_MAX6", wxSlider);
+    currentMagicSlider[6] = XRCCTRL(*this, "IDS_MAGIC_CURRENT7", wxSlider);
+    maxMagicSlider[6] = XRCCTRL(*this, "IDS_MAGIC_MAX7", wxSlider);
+    currentMagicSlider[7] = XRCCTRL(*this, "IDS_MAGIC_CURRENT8", wxSlider);
+    maxMagicSlider[7] = XRCCTRL(*this, "IDS_MAGIC_MAX8", wxSlider);
     
-    knownMagicChoice[0][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN11", wxChoice);
-    knownMagicChoice[0][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN12", wxChoice);
-    knownMagicChoice[0][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN13", wxChoice);
-    knownMagicChoice[1][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN21", wxChoice);
-    knownMagicChoice[1][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN22", wxChoice);
-    knownMagicChoice[1][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN23", wxChoice);
-    knownMagicChoice[2][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN31", wxChoice);
-    knownMagicChoice[2][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN32", wxChoice);
-    knownMagicChoice[2][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN33", wxChoice);
-    knownMagicChoice[3][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN41", wxChoice);
-    knownMagicChoice[3][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN42", wxChoice);
-    knownMagicChoice[3][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN43", wxChoice);
-    knownMagicChoice[4][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN51", wxChoice);
-    knownMagicChoice[4][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN52", wxChoice);
-    knownMagicChoice[4][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN53", wxChoice);
-    knownMagicChoice[5][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN61", wxChoice);
-    knownMagicChoice[5][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN62", wxChoice);
-    knownMagicChoice[5][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN63", wxChoice);
-    knownMagicChoice[6][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN71", wxChoice);
-    knownMagicChoice[6][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN72", wxChoice);
-    knownMagicChoice[6][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN73", wxChoice);
-    knownMagicChoice[7][0] = XRCCTRL(*this, "ID_MAGIC_KNOWN81", wxChoice);
-    knownMagicChoice[7][1] = XRCCTRL(*this, "ID_MAGIC_KNOWN82", wxChoice);
-    knownMagicChoice[7][2] = XRCCTRL(*this, "ID_MAGIC_KNOWN83", wxChoice);
+    knownMagicChoice[0][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN11", wxChoice);
+    knownMagicChoice[0][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN12", wxChoice);
+    knownMagicChoice[0][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN13", wxChoice);
+    knownMagicChoice[1][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN21", wxChoice);
+    knownMagicChoice[1][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN22", wxChoice);
+    knownMagicChoice[1][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN23", wxChoice);
+    knownMagicChoice[2][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN31", wxChoice);
+    knownMagicChoice[2][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN32", wxChoice);
+    knownMagicChoice[2][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN33", wxChoice);
+    knownMagicChoice[3][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN41", wxChoice);
+    knownMagicChoice[3][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN42", wxChoice);
+    knownMagicChoice[3][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN43", wxChoice);
+    knownMagicChoice[4][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN51", wxChoice);
+    knownMagicChoice[4][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN52", wxChoice);
+    knownMagicChoice[4][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN53", wxChoice);
+    knownMagicChoice[5][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN61", wxChoice);
+    knownMagicChoice[5][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN62", wxChoice);
+    knownMagicChoice[5][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN63", wxChoice);
+    knownMagicChoice[6][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN71", wxChoice);
+    knownMagicChoice[6][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN72", wxChoice);
+    knownMagicChoice[6][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN73", wxChoice);
+    knownMagicChoice[7][0] = XRCCTRL(*this, "IDC_MAGIC_KNOWN81", wxChoice);
+    knownMagicChoice[7][1] = XRCCTRL(*this, "IDC_MAGIC_KNOWN82", wxChoice);
+    knownMagicChoice[7][2] = XRCCTRL(*this, "IDC_MAGIC_KNOWN83", wxChoice);
     
     setOpen(false);
 }
@@ -325,52 +314,52 @@ void MainFrame::loadGameData() {
     cabinSlider->SetValue(game->getItem(CABIN));
     houseSlider->SetValue(game->getItem(HOUSE));
     
-    XRCCTRL(*this, "ID_GENERAL_LUTE", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_LUTE", wxCheckBox)->
         SetValue((game->getItem(LUTE) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_CROWN", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_CROWN", wxCheckBox)->
         SetValue((game->getItem(CROWN) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_CRYSTAL", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_CRYSTAL", wxCheckBox)->
         SetValue((game->getItem(CRYSTAL) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_HERB", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_HERB", wxCheckBox)->
         SetValue((game->getItem(HERB) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_KEY", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_KEY", wxCheckBox)->
         SetValue((game->getItem(KEY) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_TNT", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_TNT", wxCheckBox)->
         SetValue((game->getItem(TNT) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_ADAMENT", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_ADAMENT", wxCheckBox)->
         SetValue((game->getItem(ADAMENT) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_SLAB", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_SLAB", wxCheckBox)->
         SetValue((game->getItem(SLAB) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_RUBY", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_RUBY", wxCheckBox)->
         SetValue((game->getItem(RUBY) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_ROD", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_ROD", wxCheckBox)->
         SetValue((game->getItem(ROD) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_FLOATER", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_FLOATER", wxCheckBox)->
         SetValue((game->getItem(FLOATER) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_CHIME", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_CHIME", wxCheckBox)->
         SetValue((game->getItem(CHIME) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_TAIL", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_TAIL", wxCheckBox)->
         SetValue((game->getItem(TAIL) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_CUBE", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_CUBE", wxCheckBox)->
         SetValue((game->getItem(CUBE) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_BOTTLE", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_BOTTLE", wxCheckBox)->
         SetValue((game->getItem(BOTTLE) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_OXYALE", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_OXYALE", wxCheckBox)->
         SetValue((game->getItem(OXYALE) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_CANOE", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_CANOE", wxCheckBox)->
         SetValue((game->getItem(CANOE) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_FIRE_ORB", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_FIRE_ORB", wxCheckBox)->
         SetValue((game->getItem(FIREORB) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_WATER_ORB", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_WATER_ORB", wxCheckBox)->
         SetValue((game->getItem(WATERORB) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_WIND_ORB", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_WIND_ORB", wxCheckBox)->
         SetValue((game->getItem(WINDORB) == 1) ? true : false);
-    XRCCTRL(*this, "ID_GENERAL_EARTH_ORB", wxCheckBox)->
+    XRCCTRL(*this, "IDC_GENERAL_EARTH_ORB", wxCheckBox)->
         SetValue((game->getItem(EARTHORB) == 1) ? true : false);
     
     loadCharacterData();
     
-    XRCCTRL(*this, "ID_NOTEBOOK", wxNotebook)->Show(true);
+    XRCCTRL(*this, "IDN_FFSE", wxNotebook)->Show(true);
 }
 
 void MainFrame::load(wxString &filename) {
@@ -461,7 +450,7 @@ bool MainFrame::close() {
     delete sram;
     
     memberItems[0]->Check(true);
-    XRCCTRL(*this, "ID_NOTEBOOK", wxNotebook)->Show(false);
+    XRCCTRL(*this, "IDN_FFSE", wxNotebook)->Show(false);
     
     setOpen(false);
     
@@ -623,7 +612,8 @@ void MainFrame::memberChange(wxCommandEvent &event) {
 void MainFrame::helpAbout(wxCommandEvent &) {
     wxString msg = wxString(*ffseApp::APP_NAME + wxT(' ') + 
                             *ffseApp::APP_VERSION + wxT('\n') +
-                            *ffseApp::APP_COPYRIGHT);
+                            *ffseApp::APP_COPYRIGHT + wxT('\n') +
+                            *ffseApp::APP_URL);
     wxString title = wxString(wxT("About ") + *ffseApp::APP_NAME + wxT("..."));
     
     wxMessageBox(msg, title, wxOK | wxICON_INFORMATION, this);
@@ -668,45 +658,45 @@ void MainFrame::itemHaveChange(wxCommandEvent &event) {
     wxCheckBox *ctrl = (wxCheckBox *)event.GetEventObject();
     int item = LUTE;
     
-    if (ctrl == XRCCTRL(*this, "ID_GENERAL_CROWN", wxCheckBox)) {
+    if (ctrl == XRCCTRL(*this, "IDC_GENERAL_CROWN", wxCheckBox)) {
         item = CROWN;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_CRYSTAL", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_CRYSTAL", wxCheckBox)) {
         item = CRYSTAL;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_HERB", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_HERB", wxCheckBox)) {
         item = HERB;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_KEY", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_KEY", wxCheckBox)) {
         item = KEY;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_TNT", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_TNT", wxCheckBox)) {
         item = TNT;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_ADAMENT", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_ADAMENT", wxCheckBox)) {
         item = ADAMENT;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_SLAB", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_SLAB", wxCheckBox)) {
         item = SLAB;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_RUBY", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_RUBY", wxCheckBox)) {
         item = RUBY;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_ROD", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_ROD", wxCheckBox)) {
         item = ROD;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_FLOATER", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_FLOATER", wxCheckBox)) {
         item = FLOATER;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_CHIME", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_CHIME", wxCheckBox)) {
         item = CHIME;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_TAIL", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_TAIL", wxCheckBox)) {
         item = TAIL;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_CUBE", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_CUBE", wxCheckBox)) {
         item = CUBE;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_BOTTLE", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_BOTTLE", wxCheckBox)) {
         item = BOTTLE;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_OXYALE", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_OXYALE", wxCheckBox)) {
         item = OXYALE;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_CANOE", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_CANOE", wxCheckBox)) {
         item = CANOE;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_FIRE_ORB", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_FIRE_ORB", wxCheckBox)) {
         item = FIREORB;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_WATER_ORB", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_WATER_ORB", wxCheckBox)) {
         item = WATERORB;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_WIND_ORB", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_WIND_ORB", wxCheckBox)) {
         item = WINDORB;
-    } else if (ctrl == XRCCTRL(*this, "ID_GENERAL_EARTH_ORB", wxCheckBox)) {
+    } else if (ctrl == XRCCTRL(*this, "IDC_GENERAL_EARTH_ORB", wxCheckBox)) {
         item = EARTHORB;
     }
     
@@ -924,143 +914,143 @@ IMPLEMENT_DYNAMIC_CLASS(MainFrame, wxFrame)
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_CLOSE(MainFrame::windowClosing)
 
-    EVT_MENU(XRCID("IDM_FILE_OPEN"), MainFrame::fileOpen)
-    EVT_MENU(XRCID("IDM_FILE_CLOSE"), MainFrame::fileClose)
-    EVT_MENU(XRCID("IDM_FILE_SAVE"), MainFrame::fileSave)
-    EVT_MENU(XRCID("IDM_FILE_SAVE_AS"), MainFrame::fileSaveAs)
-    EVT_MENU(XRCID("IDM_FILE_EXIT"), MainFrame::fileExit)
+    EVT_MENU(wxID_OPEN, MainFrame::fileOpen)
+    EVT_MENU(wxID_CLOSE, MainFrame::fileClose)
+    EVT_MENU(wxID_SAVE, MainFrame::fileSave)
+    EVT_MENU(wxID_SAVEAS, MainFrame::fileSaveAs)
+    EVT_MENU(wxID_EXIT, MainFrame::fileExit)
     
     EVT_MENU(XRCID("IDM_MEMBER_ONE"), MainFrame::memberChange)
     EVT_MENU(XRCID("IDM_MEMBER_TWO"), MainFrame::memberChange)
     EVT_MENU(XRCID("IDM_MEMBER_THREE"), MainFrame::memberChange)
     EVT_MENU(XRCID("IDM_MEMBER_FOUR"), MainFrame::memberChange)
     
-    EVT_MENU(XRCID("IDM_HELP_ABOUT"), MainFrame::helpAbout)
+    EVT_MENU(wxID_ABOUT, MainFrame::helpAbout)
     
-    EVT_TEXT(XRCID("ID_GENERAL_GOLD"), MainFrame::goldChange)
+    EVT_TEXT(XRCID("IDT_GENERAL_GOLD"), MainFrame::goldChange)
     
-    EVT_COMMAND_SCROLL(XRCID("ID_GENERAL_HEAL"), MainFrame::itemQuantityChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_GENERAL_PURE"), MainFrame::itemQuantityChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_GENERAL_SOFT"), MainFrame::itemQuantityChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_GENERAL_TENT"), MainFrame::itemQuantityChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_GENERAL_CABIN"), MainFrame::itemQuantityChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_GENERAL_HOUSE"), MainFrame::itemQuantityChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_GENERAL_HEAL"), MainFrame::itemQuantityChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_GENERAL_PURE"), MainFrame::itemQuantityChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_GENERAL_SOFT"), MainFrame::itemQuantityChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_GENERAL_TENT"), MainFrame::itemQuantityChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_GENERAL_CABIN"), MainFrame::itemQuantityChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_GENERAL_HOUSE"), MainFrame::itemQuantityChange)
     
-    EVT_CHECKBOX(XRCID("ID_GENERAL_LUTE"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_CROWN"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_CRYSTAL"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_HERB"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_KEY"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_TNT"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_ADAMENT"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_SLAB"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_RUBY"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_ROD"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_FLOATER"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_CHIME"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_TAIL"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_CUBE"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_BOTTLE"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_OXYALE"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_CANOE"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_FIRE_ORB"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_WATER_ORB"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_WIND_ORB"), MainFrame::itemHaveChange)
-    EVT_CHECKBOX(XRCID("ID_GENERAL_EARTH_ORB"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_LUTE"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_CROWN"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_CRYSTAL"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_HERB"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_KEY"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_TNT"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_ADAMENT"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_SLAB"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_RUBY"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_ROD"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_FLOATER"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_CHIME"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_TAIL"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_CUBE"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_BOTTLE"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_OXYALE"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_CANOE"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_FIRE_ORB"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_WATER_ORB"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_WIND_ORB"), MainFrame::itemHaveChange)
+    EVT_CHECKBOX(XRCID("IDC_GENERAL_EARTH_ORB"), MainFrame::itemHaveChange)
     
-    EVT_TEXT(XRCID("ID_CHARACTER_NAME"), MainFrame::nameChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_NAME"), MainFrame::nameChange)
     
-    EVT_CHOICE(XRCID("ID_CHARACTER_CLASS"), MainFrame::conditionChange)
-    EVT_CHOICE(XRCID("ID_CHARACTER_CONDITION"), MainFrame::conditionChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_CLASS"), MainFrame::conditionChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_CONDITION"), MainFrame::conditionChange)
     
-    EVT_TEXT(XRCID("ID_CHARACTER_CURRENT_HP"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_MAX_HP"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_EXPERIENCE"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_STRENGTH"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_AGILITY"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_INTELLIGENCE"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_VITALITY"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_LUCK"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_DAMAGE"), MainFrame::statChange)
-    EVT_TEXT(XRCID("ID_CHARACTER_HIT_PERCENT"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_CURRENT_HP"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_MAX_HP"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_EXPERIENCE"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_STRENGTH"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_AGILITY"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_INTELLIGENCE"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_VITALITY"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_LUCK"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_DAMAGE"), MainFrame::statChange)
+    EVT_TEXT(XRCID("IDT_CHARACTER_HIT_PERCENT"), MainFrame::statChange)
     
-    EVT_CHOICE(XRCID("ID_CHARACTER_WEAPON1"), MainFrame::weaponChange)
-    EVT_CHOICE(XRCID("ID_CHARACTER_WEAPON2"), MainFrame::weaponChange)
-    EVT_CHOICE(XRCID("ID_CHARACTER_WEAPON3"), MainFrame::weaponChange)
-    EVT_CHOICE(XRCID("ID_CHARACTER_WEAPON4"), MainFrame::weaponChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_WEAPON1"), MainFrame::weaponChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_WEAPON2"), MainFrame::weaponChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_WEAPON3"), MainFrame::weaponChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_WEAPON4"), MainFrame::weaponChange)
     
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_WEAPON_EQUIPPED1"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_WEAPON_EQUIPPED1"),
         MainFrame::weaponEquippedChange)
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_WEAPON_EQUIPPED2"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_WEAPON_EQUIPPED2"),
         MainFrame::weaponEquippedChange)
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_WEAPON_EQUIPPED3"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_WEAPON_EQUIPPED3"),
         MainFrame::weaponEquippedChange)
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_WEAPON_EQUIPPED4"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_WEAPON_EQUIPPED4"),
         MainFrame::weaponEquippedChange)
     
-    EVT_CHOICE(XRCID("ID_CHARACTER_ARMOR1"), MainFrame::armorChange)
-    EVT_CHOICE(XRCID("ID_CHARACTER_ARMOR2"), MainFrame::armorChange)
-    EVT_CHOICE(XRCID("ID_CHARACTER_ARMOR3"), MainFrame::armorChange)
-    EVT_CHOICE(XRCID("ID_CHARACTER_ARMOR4"), MainFrame::armorChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_ARMOR1"), MainFrame::armorChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_ARMOR2"), MainFrame::armorChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_ARMOR3"), MainFrame::armorChange)
+    EVT_CHOICE(XRCID("IDC_CHARACTER_ARMOR4"), MainFrame::armorChange)
     
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_ARMOR_EQUIPPED1"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_ARMOR_EQUIPPED1"),
         MainFrame::armorEquippedChange)
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_ARMOR_EQUIPPED2"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_ARMOR_EQUIPPED2"),
         MainFrame::armorEquippedChange)
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_ARMOR_EQUIPPED3"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_ARMOR_EQUIPPED3"),
         MainFrame::armorEquippedChange)
-    EVT_CHECKBOX(XRCID("ID_CHARACTER_ARMOR_EQUIPPED4"),
+    EVT_CHECKBOX(XRCID("IDC_CHARACTER_ARMOR_EQUIPPED4"),
         MainFrame::armorEquippedChange)
    
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT1"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT1"),
         MainFrame::currentMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT2"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT2"),
         MainFrame::currentMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT3"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT3"),
         MainFrame::currentMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT4"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT4"),
         MainFrame::currentMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT5"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT5"),
         MainFrame::currentMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT6"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT6"),
         MainFrame::currentMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT7"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT7"),
         MainFrame::currentMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_CURRENT8"),
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_CURRENT8"),
         MainFrame::currentMagicChange)
     
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX1"), MainFrame::maxMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX2"), MainFrame::maxMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX3"), MainFrame::maxMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX4"), MainFrame::maxMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX5"), MainFrame::maxMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX6"), MainFrame::maxMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX7"), MainFrame::maxMagicChange)
-    EVT_COMMAND_SCROLL(XRCID("ID_MAGIC_MAX8"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX1"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX2"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX3"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX4"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX5"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX6"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX7"), MainFrame::maxMagicChange)
+    EVT_COMMAND_SCROLL(XRCID("IDS_MAGIC_MAX8"), MainFrame::maxMagicChange)
     
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN11"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN12"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN13"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN21"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN22"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN23"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN31"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN32"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN33"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN41"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN42"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN43"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN51"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN52"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN53"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN61"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN62"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN63"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN71"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN72"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN73"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN81"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN82"), MainFrame::knownMagicChange)
-    EVT_CHOICE(XRCID("ID_MAGIC_KNOWN83"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN11"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN12"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN13"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN21"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN22"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN23"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN31"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN32"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN33"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN41"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN42"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN43"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN51"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN52"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN53"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN61"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN62"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN63"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN71"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN72"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN73"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN81"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN82"), MainFrame::knownMagicChange)
+    EVT_CHOICE(XRCID("IDC_MAGIC_KNOWN83"), MainFrame::knownMagicChange)
 END_EVENT_TABLE()
 

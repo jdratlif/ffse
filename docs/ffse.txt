@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-| Final Fantasy SRAM Editor 1.1
+| Final Fantasy SRAM Editor 1.2
 | Copyright (C) 2004-2005,2007 emuWorks
 | Written by John Ratliff
 | http://games.technoplaza.net/
@@ -106,6 +106,10 @@
 --------------------
 - Revision History -
 --------------------
+
+  Version 1.2 - Sunday, February 25, 2007
+    - Minor code cleanup
+    - Adjusted frame sizers
 
   Version 1.1 - Sunday, February 18, 2007
     - Minor code cleanup

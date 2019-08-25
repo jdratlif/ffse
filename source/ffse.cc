@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: ffse.cc,v 1.5 2007/02/18 16:26:01 technoplaza Exp $
+// $Id: ffse.cc,v 1.6 2007/02/25 11:29:19 technoplaza Exp $
  
 #ifdef HAVE_CONFIG_H
     #include <config.h>
@@ -44,13 +44,13 @@ void InitXmlResource();
 
 // static variable initialization
 const wxString *ffseApp::APP_NAME =
-    new wxString(wxT("ffse"));
+    new wxString(wxT("Final Fantasy SRAM Editor"));
 
 const wxString *ffseApp::APP_VERSION =
-    new wxString(wxT("1.1"));
+    new wxString(wxT("1.2"));
 
 const wxString *ffseApp::APP_COPYRIGHT =
-    new wxString(wxT("Copyright (C) 2004-2005 emuWorks"));
+    new wxString(wxT("Copyright (C) 2004-2005,2007 emuWorks"));
 
 const wxString *ffseApp::APP_URL =
     new wxString(wxT("http://games.technoplaza.net/"));
@@ -61,9 +61,7 @@ bool ffseApp::OnInit() {
     InitXmlResource();
     
     MainFrame *frame = new MainFrame;
-    frame->SetTitle(*APP_NAME + wxT(' ') + *APP_VERSION);
     frame->Show(true);
-    SetTopWindow(frame);
     
     return true;
 }

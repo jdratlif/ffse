@@ -1,4 +1,4 @@
-AC_INIT([ffse], [1.1], [emuWorks@technoplaza.net])
+AC_INIT([ffse], [1.2], [webmaster@technoplaza.net])
 AC_PREREQ([2.59])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.9.6 dist-bzip2])

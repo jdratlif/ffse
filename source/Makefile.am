@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = subdir-objects
 CLEANFILES = res/ffse.cc
-EXTRA_DIST = res/ffse.cc res/ffse.xrc res/Info.plist res/orb.ico \
-	res/orb32x32.xpm
+EXTRA_DIST = res/ffse.pjd res/ffse.xrc res/Info.plist res/orb.ico \
+	res/orb32x32.xpm res/PkgInfo res/windows.rc
 
 bin_PROGRAMS = ffse
 ffse_SOURCES = ffse.cc ffse.hh \

@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// $Id: ffse.hh,v 1.3 2005/08/04 03:07:59 technoplaza Exp $
+// $Id: ffse.hh,v 1.4 2007/02/25 11:29:19 technoplaza Exp $
 
 #ifndef _FFSE_HH
 #define _FFSE_HH
@@ -33,6 +33,8 @@ namespace ffse {
      * The main class. Initializes the application and creates the view.
      */
     class ffseApp : public wxApp {
+        DECLARE_CLASS(ffseApp)
+        
     public:
         /**
          * Called by wxWidgets to start initialization of the application.
@@ -52,8 +54,6 @@ namespace ffse {
         
         /// The website URL for this application.
         static const wxString *APP_URL;
-    private:
-        DECLARE_CLASS(ffseApp)
     };
     
     DECLARE_APP(ffseApp)

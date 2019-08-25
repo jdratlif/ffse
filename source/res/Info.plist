@@ -24,19 +24,19 @@
     <string>????</string>
     
     <key>CFBundleVersion</key>
-    <string>1.0</string>
+    <string>1.2</string>
     
     <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
+    <string>1.2</string>
     
     <key>CFBundleGetInfoString</key>
-    <string>ffse 1.0, (C) 2004-2005 emuWorks</string>
+    <string>ffse 1.2, (C) 2004-2005,2007 emuWorks</string>
     
     <key>CFBundleLongVersionString</key>
-    <string>1.0, (C) 2004-2005 emuWorks</string>
+    <string>1.2, (C) 2004-2005,2007 emuWorks</string>
     
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright 2004-2005 emuWorks</string>
+    <string>Copyright 2004-2005,2007 emuWorks</string>
     
     <key>LSRequiresCarbon</key>
     <true/>
