@@ -38,7 +38,7 @@
 #include <fstream>
 #include <cstring>
 
-#include "ffse.hh"
+#include "ffseApp.hh"
 #include "model/SaveSlot.hh"
 #include "res/orb32x32.xpm"
 #include "view/FileDropTarget.hh"
