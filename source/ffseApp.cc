@@ -34,7 +34,7 @@
 
 #include <wx/xrc/xmlres.h>
 
-#include "ffse.hh"
+#include "ffseApp.hh"
 #include "view/MainFrame.hh"
 
 using namespace ffse;
