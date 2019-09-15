@@ -1,5 +1,3 @@
-# $Id: Makefile.am,v 1.9 2008/12/17 00:36:23 jdratlif Exp $
-
 AUTOMAKE_OPTIONS = subdir-objects
 CLEANFILES = res/ffse.cc
 EXTRA_DIST = res/ffse.icns res/ffse.xrc res/Info.plist \
@@ -7,7 +5,7 @@ EXTRA_DIST = res/ffse.icns res/ffse.xrc res/Info.plist \
 
 bin_PROGRAMS = ffse
 
-ffse_SOURCES = ffse.cc ffse.hh \
+ffse_SOURCES = ffseApp.cc ffseApp.hh \
 	model/SaveSlot.cc model/SaveSlot.hh \
 	res/ffse.cc \
 	view/MainFrame.cc view/MainFrame.hh \
@@ -32,4 +30,3 @@ ffse.app: ffse res/ffse.icns res/Info.plist
 	cp res/Info.plist ffse.app/Contents
 	cp res/ffse.icns ffse.app/Contents/Resources
 	echo -n 'APPL????' > ffse.app/Contents/PkgInfo
-

@@ -1,19 +1,30 @@
-dnl $Id: configure.ac,v 1.6 2008/12/17 00:36:23 jdratlif Exp $
+dnl Initialize autoconf
+AC_INIT([ffse], [1.2b], [webmaster@technoplaza.net])
 
-AC_INIT([ffse], [1.2a], [webmaster@technoplaza.net])
-AC_PREREQ([2.59])
+dnl require autoconf >= 2.69
+AC_PREREQ([2.69])
+
+dnl use the config.h header
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([1.9.6 dist-bzip2])
 
+dnl initialize automake and allow bzipped distributions
+AM_INIT_AUTOMAKE([1.16.1 dist-bzip2])
+
+dnl host system check
 AC_CANONICAL_HOST
+
+dnl AM_CONDITIONAL([WINDOWS], test x$host_os = xmingw32)
 AM_CONDITIONAL([WINDOWS],
                [case $host_os in
                mingw32 | cygwin ) test x = x ;;
                * ) test 0 = 1 ;;
                esac])
 
+dnl check for c++ compiler and BSD install
 AC_PROG_CXX
 AC_PROG_INSTALL
+
+dnl tests for wxWidgets
 AM_OPTIONS_WXCONFIG
 AM_PATH_WXCONFIG([2.8.0], HAVE_WXWIDGETS=1, HAVE_WXWIDGETS=0)
 
@@ -29,6 +40,21 @@ else
                   path or a missing wx-config program.])
 fi
 
+dnl add compile options for older versions of OS X
+AC_ARG_WITH([macosx-version-min],
+    AS_HELP_STRING(
+        [--with-macosx-version-min=VERSION],
+        [compile for this version of Mac OS X and later]))
+
+if test "x$with_macosx_version_min" != "x"; then
+    MACOSX_VERSION_MIN_OPTS="-mmacosx-version-min=$with_macosx_version_min"
+    CPPFLAGS="$CPPFLAGS $MACOSX_VERSION_MIN_OPTS"
+    CFLAGS="$CFLAGS $MACOSX_VERSION_MIN_OPTS"
+    CXXFLAGS="$CXXFLAGS $MACOSX_VERSION_MIN_OPTS"
+    LDFLAGS="$LDFLAGS $MACOSX_VERSION_MIN_OPTS"
+fi
+
+dnl save CPP include paths to use with windows resource compiler in msys/cygwin
 WX_INCLUDES=""
 for opt in $WX_CPPFLAGS
 do
@@ -40,6 +66,6 @@ do
 done
 AC_SUBST(WX_INCLUDES)
 
+dnl configure files to produce
 AC_CONFIG_FILES([Makefile source/Makefile])
 AC_OUTPUT
-
