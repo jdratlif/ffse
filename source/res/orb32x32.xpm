@@ -1,5 +1,5 @@
 /* XPM */
-static char * orb32x32_xpm[] = {
+static const char * orb32x32_xpm[] = {
 "32 32 256 2",
 "  	c #000000",
 ". 	c #FCFCD0",
